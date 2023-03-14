@@ -677,16 +677,15 @@ static ngx_int_t ngx_http_gridfs_handler(ngx_http_request_t* request) {
     ngx_str_t location_name;
     ngx_str_t full_uri;
     char* value;
-    ngx_http_mongo_connection_t *mongo_conn;
+    volatile ngx_http_mongo_connection_t *mongo_conn;
     gridfs gfs;
     gridfile gfile;
     gridfs_offset length;
-    ngx_uint_t chunksize;
     ngx_uint_t numchunks;
     char* contenttype;
     volatile ngx_uint_t i;
     volatile ngx_int_t found = 0;
-    ngx_int_t rc = NGX_OK;
+    volatile ngx_int_t rc = NGX_OK;
     bson query;
     bson_buffer buf;
     bson_oid_t oid;
@@ -814,7 +813,6 @@ static ngx_int_t ngx_http_gridfs_handler(ngx_http_request_t* request) {
 
     /* Get information about the file */
     length = gridfile_get_contentlength(&gfile);
-    chunksize = gridfile_get_chunksize(&gfile);
     numchunks = gridfile_get_numchunks(&gfile);
     contenttype = (char*)gridfile_get_contenttype(&gfile);
 
