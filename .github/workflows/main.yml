@@ -1,0 +1,19 @@
+name: Hello World
+
+# Trigger the workflow on PR events
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+# Define the jobs for Java and Node.js
+jobs:
+  nodejs-tests:
+    runs-on: ubuntu-latest
+    name: Hi World
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - run: echo "Hello World!"
+    
